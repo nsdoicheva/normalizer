@@ -20,7 +20,6 @@ public final class JobTitleTokenizer {
      *
      * @param text non-null job-title text
      * @return the normalized text, or an empty string if no letters or numbers remain
-     * @throws NullPointerException if {@code text} is null
      */
     public static String normalise(String text) {
         Objects.requireNonNull(text, "text must not be null");
@@ -39,7 +38,6 @@ public final class JobTitleTokenizer {
      *
      * @param text non-null job-title text
      * @return an immutable list of tokens, or an empty list if no letters or numbers remain
-     * @throws NullPointerException if {@code text} is null
      */
     public static List<String> tokenize(String text) {
         String normalizedText = normalise(text);

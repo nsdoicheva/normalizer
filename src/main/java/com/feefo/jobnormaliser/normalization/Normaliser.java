@@ -35,23 +35,12 @@ public class Normaliser {
      *
      * @param similarity strategy that scores an input against each title from 0.0 to 1.0
      * @param minimumScore finite minimum accepted score from 0.0 to 1.0, inclusive
-     * @throws NullPointerException if the strategy is null
-     * @throws IllegalArgumentException if the minimum score is not finite or is outside 0.0 to 1.0
      */
     public Normaliser(TitleSimilarity similarity, double minimumScore) {
         this(DEFAULT_TITLES, similarity, minimumScore);
     }
 
-    /**
-     * Creates a normaliser with a snapshot of the supplied titles and a similarity strategy.
-     *
-     * @param normalisedTitles non-empty list of canonical job titles
-     * @param similarity strategy that scores an input against each title from 0.0 to 1.0
-     * @param minimumScore finite minimum accepted score from 0.0 to 1.0, inclusive
-     * @throws NullPointerException if the title list or strategy is null, or a title is null
-     * @throws IllegalArgumentException if the list is empty, a title has no letters or numbers,
-     *         or the minimum score is not finite or is outside 0.0 to 1.0
-     */
+    /** Creates a normaliser with a snapshot of the supplied titles and a similarity strategy. */
     public Normaliser(List<String> normalisedTitles, TitleSimilarity similarity, double minimumScore) {
         this.similarity = Objects.requireNonNull(similarity, "Title similarity cannot be null");
         this.candidates = validateAndCopyTitles(normalisedTitles);
@@ -68,9 +57,6 @@ public class Normaliser {
      * @param jobTitle non-null job title to normalise
      * @return an optional containing the best matching canonical title,
      *         or an empty optional if no score reaches the configured minimum
-     * @throws NullPointerException if {@code jobTitle} is null
-     * @throws IllegalArgumentException if {@code jobTitle} contains no letters or numbers
-     * @throws IllegalStateException if the strategy returns a score outside 0.0 to 1.0
      */
     public Optional<String> normalise(String jobTitle) {
         Objects.requireNonNull(jobTitle, "Job title cannot be null");
@@ -88,8 +74,6 @@ public class Normaliser {
      * @param jobTitle validated input title passed unchanged to the strategy
      * @return an optional containing the best matching canonical title,
      *         or an empty optional if its score is below the configured minimum
-     * @throws IllegalStateException if the strategy returns a non-finite score
-     *         or a score outside {@code [0.0, 1.0]}
      */
     private Optional<String> findBestMatch(String jobTitle) {
         String bestMatch = candidates.get(0);
